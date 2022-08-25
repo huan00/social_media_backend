@@ -4,21 +4,17 @@ import jwt from 'jsonwebtoken'
 import User from '../models/user.js'
 dotenv.config()
 
-export const signin = async (req, res) => {
+export const signUp = async (req, res) => {
   const { firstName, lastName, email, password, confirmPassword } = req.body
 
   try {
     const existingUser = await User.findOne({ email })
-
     if (existingUser)
       return res.status(404).json({ message: 'User already exisit!' })
-
     if (password !== confirmPassword) {
       return res.status(400).json({ message: "Password doesn't match!" })
     }
-
-    const hashedPassword = await bcrypt(password, process.env.HASH_KEY)
-
+    const hashedPassword = await bcrypt.hash(password, +process.env.SALT_ROUND)
     const user = await User.create({
       firstName,
       lastName,
@@ -33,5 +29,7 @@ export const signin = async (req, res) => {
       }
     )
     res.status(201).json({ user, token })
-  } catch (error) {}
+  } catch (error) {
+    console.log(error)
+  }
 }

@@ -3,6 +3,7 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import userRoutes from './routes/user.js'
+import postRoutes from './routes/post.js'
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -17,5 +18,6 @@ app.use(bodyParser.json())
 app.use(cors())
 
 app.use('/user', userRoutes)
+app.use('/post', postRoutes)
 
 app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`))

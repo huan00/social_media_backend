@@ -8,8 +8,6 @@ export const createPost = async (req, res) => {
     createdAt: new Date().toISOString()
   })
 
-  console.log(req)
-
   try {
     await createdPost.save()
     res.status(201).json(createdPost)
@@ -17,4 +15,14 @@ export const createPost = async (req, res) => {
     res.status(409).json({ message: error.message })
   }
 }
-export const getAllPosts = () => {}
+export const getPosts = async (req, res) => {
+  try {
+    const posts = await PostMessage.find({})
+    if (posts) {
+      res.status(200).json(posts)
+    }
+    res.status(502).json({ message: 'No Post found!' })
+  } catch (error) {
+    res.status(500).json({ message: error })
+  }
+}

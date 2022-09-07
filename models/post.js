@@ -5,7 +5,7 @@ const postSchema = mongoose.Schema({
   message: { type: String, require: true },
   name: { type: String, require: true },
   creator: { type: String, require: true },
-  tags: { type: String },
+  tags: { type: [String] },
   selectedFile: { type: String },
   likes: {
     type: [String],

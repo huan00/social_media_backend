@@ -6,15 +6,18 @@ import {
   likePost,
   deletePost,
   updatePost,
-  getSearchPosts
+  getSearchPosts,
+  submitComment
 } from '../controllers/post.js'
 import auth from '../middleware/auth.js'
 
 const router = express.Router()
 
 router.get('/', getPosts)
+
 router.get('/search', getSearchPosts)
-router.post('/', createPost)
+router.post('/', auth, createPost)
+router.post('/:id/comment', auth, submitComment)
 router.put('/:id/likepost', auth, likePost)
 router.put('/:id/updatepost', auth, updatePost)
 router.delete('/:id/deletepost', auth, deletePost)

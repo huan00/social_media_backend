@@ -18,7 +18,7 @@ export const createPost = async (req, res) => {
 }
 export const getPosts = async (req, res) => {
   try {
-    const posts = await PostMessage.find({})
+    const posts = await PostMessage.find({}).sort({ _id: -1 })
     if (!posts) {
       res.status(502).json({ message: 'No Post found!' })
     }
@@ -90,4 +90,16 @@ export const getSearchPosts = async (req, res) => {
   } catch (error) {
     res.status(404).json({ message: 'No feeds found' })
   }
+}
+
+export const submitComment = async (req, res) => {
+  const { id } = req.params
+  const { comment } = req.body
+
+  const post = await PostMessage.findById(id)
+  post.comments.push(comment)
+  const updatedPost = await PostMessage.findByIdAndUpdate(id, post, {
+    new: true
+  })
+  res.status(202).json(updatedPost)
 }

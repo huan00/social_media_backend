@@ -28,6 +28,17 @@ export const getPosts = async (req, res) => {
   }
 }
 
+export const getAPost = async (req, res) => {
+  const { id } = req.params
+  if (!mongoose.Types.ObjectId.isValid) {
+    return res.status(404).json({ message: 'invalid ID' })
+  }
+
+  const post = await PostMessage.findById(id)
+  console.log(post)
+  res.status(200).json(post)
+}
+
 export const likePost = async (req, res) => {
   const { id } = req.params
 

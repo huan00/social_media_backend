@@ -2,6 +2,7 @@ import express from 'express'
 
 import {
   getPosts,
+  getAPost,
   createPost,
   likePost,
   deletePost,
@@ -14,7 +15,7 @@ import auth from '../middleware/auth.js'
 const router = express.Router()
 
 router.get('/', getPosts)
-
+router.get('/:id', auth, getAPost)
 router.get('/search', getSearchPosts)
 router.post('/', auth, createPost)
 router.post('/:id/comment', auth, submitComment)

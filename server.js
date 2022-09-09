@@ -21,4 +21,6 @@ app.use(cors())
 app.use('/user', userRoutes)
 app.use('/post', postRoutes)
 
-app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`))
+app.listen(process.env.PORT || PORT, () =>
+  console.log(`Server running on PORT ${PORT}`)
+)

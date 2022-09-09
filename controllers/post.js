@@ -97,6 +97,7 @@ export const getSearchPosts = async (req, res) => {
     const findPosts = await PostMessage.find({
       $or: [{ title }, { tags: { $in: tags.split(',') } }]
     })
+    console.log(findPosts)
     res.json(findPosts)
   } catch (error) {
     res.status(404).json({ message: 'No feeds found' })
